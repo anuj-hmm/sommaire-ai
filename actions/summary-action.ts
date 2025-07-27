@@ -1,0 +1,31 @@
+'use server';
+
+import { getDbconnection } from "@/lib/db";
+import { currentUser } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
+
+export async function deleteSummaryAction({summaryId} : {summaryId : string}){
+   try{
+       const user=await currentUser();
+       const userId=user?.id;
+
+       if(!userId){
+        throw new Error('User not found');
+       }
+
+       const sql=await getDbconnection();
+
+       //delere from db
+       const result=await sql
+       `DELETE FORM pdf_summaries WHERE id=${summaryId} AND user_id=${userId} RETURNING id;`;
+
+       if(result.length>0){
+        revalidatePath('/dashboard');
+        return {success : true};
+       }
+   }catch(error){
+     console.error('Error deleting summary',error);
+     return {success : false};
+   }
+}
+

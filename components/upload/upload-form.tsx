@@ -85,7 +85,6 @@ export default function UploadForm() {
 
         if (data.summary) {
           storeResult = await storePdfSummaryAction({
-            userId: '', // Add a dummy userId or fetch the real one if available
             summary: data.summary,
             fileUrl: resp[0].serverData.fileUrl, // Correct property
             title: data.title,
@@ -107,8 +106,7 @@ export default function UploadForm() {
       setIsLoading(false);
       console.log('Error Occured', error);
       formRef.current?.reset();
-    }
-    finally{
+    } finally {
       setIsLoading(false);
     }
   };

@@ -8,7 +8,6 @@ import { formatFileNameAsTitle } from '@/utils/format.utils';
 import { revalidatePath } from 'next/cache';
 
 interface PdfSummaryType {
-  userId: string;
   fileUrl: string;
   summary: string;
   title: string;
@@ -148,13 +147,13 @@ async function savePdfSummary({
   // sql inserting pdf summary
   try {
     const sql = await getDbconnection();
-    await sql`
-    INSERT INTO pdf_summaries (
-  user_id,
-  original_file_url,
-  summary_text,
-  title,
-  file_name
+    const [savedSummary] = await sql`INSERT INTO 
+    pdf_summaries (
+    user_id,
+    original_file_url,
+    summary_text,
+    title,
+    file_name
 )
 VALUES
   (
@@ -162,12 +161,12 @@ VALUES
   ${fileUrl},
   ${summary},
   ${title},
-  ${fileName},
-    
-  );
-    `;
+  ${fileName}
+  )RETURNING id,summary_text`;
+    return savedSummary;
   } catch (error) {
     console.log('Error saving PDF summary', error);
+    throw error;
   }
 }
 
@@ -202,8 +201,6 @@ export async function storePdfSummaryAction({
         message: 'Failed to save PDF summary, please try again...',
       };
     }
-
-   
   } catch (error) {
     return {
       success: false,
@@ -213,14 +210,13 @@ export async function storePdfSummaryAction({
   }
 
   //Revalidate our cache
-  revalidatePath(`/summaries/${savedSummary.id}`)
+  revalidatePath(`/summaries/${savedSummary.id}`);
 
   return {
     success: true,
     message: 'PDF summary saved successfully',
-    data : {
-     id: savedSummary.id,
-    }
+    data: {
+      id: savedSummary.id,
+    },
   };
-
 }

@@ -3,9 +3,20 @@ import { ArrowRight, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import BgGradient from '@/components/common/bg-gradient';
 import SummaryCard from '@/components/summaries/summary-card';
-export default function DashboardPage() {
+import { getSummaries } from '@/lib/summaries';
+import { currentUser } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+import EmptySummaryState from '@/components/summaries/empty-summary-state';
+export default async function DashboardPage() {
+    const user=await currentUser();
     const uploadLimit=5;
-    const summaries=[
+    const userId=user?.id;
+
+    if(!userId){return redirect('/sign-in');}
+
+    // const summaries=await getSummaries(userId);
+    //remove below code of summaries and keep the main above code
+     const summaries=[
         {
             id : 1,
             title : 'Sous Soul',
@@ -14,7 +25,8 @@ export default function DashboardPage() {
             status:'completed'
         }
     ]
-    return (
+    
+        return (
         <main className="min-h-screen">
             <BgGradient className="from-emerald-200 via-teal-200 to-cyan-200"/>
             <div className="container mx-auto flex flex-col gap-4">
@@ -45,13 +57,17 @@ export default function DashboardPage() {
                             </p>
                         </div>
                     </div>
-                    <div className='grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0'>
-                        {
-                            summaries.map((summary,index)=>(
-                                <SummaryCard key={index} summary={summary}/>
-                            ))
-                        }
-                    </div>
+
+                    {summaries.length===0?<EmptySummaryState/> : 
+                    (<div className='grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0'>
+                    {
+                        summaries.map((summary,index)=>(
+                            <SummaryCard key={index} summary={summary}/>
+                        ))}
+                </div>
+                )}
+
+                    
                 </div>
             </div>
         </main>
