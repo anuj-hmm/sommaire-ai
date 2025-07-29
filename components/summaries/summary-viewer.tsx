@@ -25,8 +25,6 @@ export function SummaryViewer({ summary }: { summary: string }) {
 
   const handlePrevious = () => setCurrentSection(prev => Math.max(prev - 1, 0));
 
-  const handleSectionSelect = (index: number) =>
-    setCurrentSection(Math.min(Math.max(index, 0), sections.length - 1));
 
   const sections = summary
     .split('\n#')
@@ -49,7 +47,6 @@ export function SummaryViewer({ summary }: { summary: string }) {
         <div className='px-4 sm:px-6'>
           <SectionTitle title={sections[currentSection]?.title || ''}/>
           <ContentSection 
-          title={sections[currentSection]?.title || ''}
           points={sections[currentSection]?.points || []}/>
         </div>
       </div>

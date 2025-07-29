@@ -19,7 +19,9 @@ const plans = [
     description: 'Perfect for occasional use',
     id: 'basic',
     items: ['5 PDF summaries per month'],
-    paymentLink: '',
+    paymentLink: process.env.NODE_ENV==='development'
+    ? 'https://buy.stripe.com/test_28E14pefW5ZKfU6dgQfrW00'
+    :'',
     priceID: '',
   },
   {
@@ -33,7 +35,9 @@ const plans = [
       'Markdown Export',
     ],
     id: 'pro',
-    paymentLink: '',
+    paymentLink: process.env.NODE_ENV==='development'
+    ? 'https://buy.stripe.com/test_eVqaEZ8VC87S9vI7WwfrW01'
+    :'',
     priceID: '',
   },
 ];
