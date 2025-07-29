@@ -16,9 +16,9 @@ export async function deleteSummaryAction({summaryId} : {summaryId : string}){
 
        const sql=await getDbconnection();
 
-       //delere from db
+       //delete from db
        const result=await sql
-       `DELETE FORM pdf_summaries WHERE id=${summaryId} AND user_id=${userId} RETURNING id;`;
+       `DELETE FROM pdf_summaries WHERE id=${summaryId} AND user_id=${userId} RETURNING id;`;
 
        if(result.length>0){
         revalidatePath('/dashboard');
