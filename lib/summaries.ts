@@ -30,6 +30,7 @@
 //   }
 // }
 
+// lib/summaries.ts
 import { getDbconnection } from './db';
 
 export async function getSummaries(userId: string) {
@@ -72,7 +73,7 @@ export async function getSummaryById(id: string) {
 
     if (!summary) return null;
 
-    // Calculate word count if summary_text exists
+    // Calculate word count client-side
     const word_count = summary.summary_text
       ? summary.summary_text.split(/\s+/).length
       : 0;

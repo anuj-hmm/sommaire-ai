@@ -92,6 +92,7 @@ export default async function SummaryPage({
     notFound();
   }
 
+  // Ensure summary has the correct type
   const {
     title,
     summary_text,
@@ -99,7 +100,14 @@ export default async function SummaryPage({
     word_count,
     created_at,
     original_file_url,
-  } = summary;
+  } = summary as {
+    title: string;
+    summary_text: string;
+    file_name?: string;
+    word_count?: number;
+    created_at: string;
+    original_file_url?: string;
+  };
   const readingTime = Math.ceil((word_count || 0) / 200).toString();
 
   return (
@@ -120,7 +128,7 @@ export default async function SummaryPage({
               summaryText={summary_text}
               fileName={file_name}
               createdAt={created_at}
-              originalFileUrl={original_file_url}
+              originalFileUrl={original_file_url ?? ''}
             />
           )}
 
@@ -134,7 +142,7 @@ export default async function SummaryPage({
               </div>
 
               <div className='relative mt-8 sm:mt-6 flex justify-center'>
-                <SummaryViewer summary={summary.summary_text} />
+                <SummaryViewer summary={summary_text} />
               </div>
             </div>
           </div>
