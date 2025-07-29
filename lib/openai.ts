@@ -21,13 +21,24 @@ export async function generateSummaryFromOpenAI(pdfText:string, retryCount = 0){
             max_tokens: 1500,
         });
         return response.choices[0].message.content;
-    }catch(error: any){
-        if(error?.status==429 && retryCount < 3){
+    }catch(error: unknown){
+        if (
+            typeof error === "object" &&
+            error !== null &&
+            "status" in error &&
+            (error as { status?: number }).status === 429 &&
+            retryCount < 3
+        ) {
             // Wait for 2 seconds before retrying
             await new Promise(resolve => setTimeout(resolve, 2000));
             return generateSummaryFromOpenAI(pdfText, retryCount + 1);
         }
-        if(error?.status==429){
+        if (
+            typeof error === "object" &&
+            error !== null &&
+            "status" in error &&
+            (error as { status?: number }).status === 429
+        ) {
             throw new Error('Rate limit exceeded. Please try again in a few minutes.');
         }
         throw error;

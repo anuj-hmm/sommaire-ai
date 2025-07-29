@@ -14,17 +14,17 @@ export default async function DashboardPage() {
 
     if(!userId){return redirect('/sign-in');}
 
-    // const summaries=await getSummaries(userId);
+    const summaries=await getSummaries(userId);
     //remove below code of summaries and keep the main above code
-     const summaries=[
-        {
-            id : 1,
-            title : 'Sous Soul',
-            created_at : '2025-01-30 20:53:10.759642+00',
-            summary_text : 'description',
-            status:'completed'
-        }
-    ]
+    //  const summaries=[
+    //     {
+    //         id : 1,
+    //         title : 'Sous Soul',
+    //         created_at : '2025-01-30 20:53:10.759642+00',
+    //         summary_text : 'description',
+    //         status:'completed'
+    //     }
+    // ]
     
         return (
         <main className="min-h-screen">
@@ -34,7 +34,7 @@ export default async function DashboardPage() {
                     <div className="flex gap-4 mb-8 justify-between">
                         <div className="flex flex-col gap-2">
                             <h1 className="text-4xl font-bold tracking-tight bg-linear-to-r from-gray-600 to-gray-900 bg-clip-text text-transparent">Your Summaries</h1>
-                            <p className="text-gray-600">Transform your PDF's into concise, actionable insights</p>
+                            <p className="text-gray-600">Transform your PDFs into concise, actionable insights</p>
                         </div>
                         <Button
                             variant={'link'}
@@ -48,7 +48,7 @@ export default async function DashboardPage() {
                     </div>
                     <div className='mb-6'>
                         <div className='bg-rose-50 border border-rose-200 rounded-lg p-4 text-rose-800'>
-                            <p className='text-sm'>You've reached the limit of {uploadLimit} uploads on the basic plan.{' '}
+                            <p className='text-sm'>You have reached the limit of {uploadLimit} uploads on the basic plan.{' '}
                             <Link href="/#pricing" className='text-rose-800 underline font-medium underline-offset-4 inline-flex items-center '>
                             Click here to upgrade to Pro{' '}
                             <ArrowRight className='w-4 h-4 inline-block'/> 

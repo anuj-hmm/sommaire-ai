@@ -8,6 +8,7 @@ export async function deleteSummaryAction({summaryId} : {summaryId : string}){
    try{
        const user=await currentUser();
        const userId=user?.id;
+       
 
        if(!userId){
         throw new Error('User not found');
