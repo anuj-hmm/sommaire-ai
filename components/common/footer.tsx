@@ -1,25 +1,33 @@
+import Link from 'next/link';
 export default function Footer() {
   return (
-    <footer className='bg-gradient-to-r py-8 mt-12'>
-      <div className='container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4'>
-        <div className='text-gray-700 font-semibold text-lg'>
-          Sommaire &copy; {new Date().getFullYear()}
-        </div>
-        <div className='flex gap-6 text-gray-600 text-sm'>
-          <a
+    <footer className='relative bg-gradient-to-r from-rose-50 to-white py-16 border-t border-rose-100'>
+      <div className='container mx-auto px-4 flex flex-col items-center justify-center gap-10'>
+        <div className='flex flex-col md:flex-row items-center justify-center gap-8 text-gray-600'>
+          <Link
             href='https://github.com/'
             target='_blank'
             rel='noopener noreferrer'
-            className='hover:text-gray-900 transition-colors'
+            className='hover:text-rose-600 transition-colors font-medium text-lg'
           >
             GitHub
-          </a>
-          <a href='/privacy' className='hover:text-gray-900 transition-colors'>
+          </Link>
+          <Link
+            href='/privacy'
+            className='hover:text-rose-600 transition-colors font-medium text-lg'
+          >
             Privacy
-          </a>
-          <a href='/contact' className='hover:text-gray-900 transition-colors'>
+          </Link>
+          <Link
+            href='/contact'
+            className='hover:text-rose-600 transition-colors font-medium text-lg'
+          >
             Contact
-          </a>
+          </Link>
+        </div>
+
+        <div className='text-gray-700 font-medium text-lg'>
+          &copy; {new Date().getFullYear()} Sommaire. All rights reserved.
         </div>
       </div>
     </footer>
