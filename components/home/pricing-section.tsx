@@ -62,7 +62,11 @@ export default function PricingSection() {
         </div>
         <div className='relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8'>
           {pricingPlans.map(plan => (
-            <PricingCard key={plan.id} {...plan} />
+            <PricingCard
+              key={plan.id}
+              {...plan}
+              priceID={plan.priceID ?? plan.priceId ?? ''}
+            />
           ))}
         </div>
       </div>

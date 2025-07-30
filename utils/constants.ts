@@ -31,3 +31,14 @@ export const pricingPlans = [
     ?'price_1RqF7dPNW4qbkmbmZEUaWmhS': '',
   },
 ];
+
+export const containerVariants = {
+  hidden : {opactiy : 0},
+  visible : {
+    opacity : 1,
+    transition : {
+      staggerChildren  : 0.2,
+      delayChildren : 0.1,
+    }
+  }
+}

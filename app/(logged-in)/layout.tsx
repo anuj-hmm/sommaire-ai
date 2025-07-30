@@ -9,15 +9,24 @@ export default async function Layout ({
 } :{
     children : React.ReactNode;
 }){
-    const user= await currentUser
-    if(!user){
+    const user = await currentUser();
+    if (!user) {
         redirect('/sign-in');
     }
 
-    const hasActiveSubscription =await hasActivePlan(user);
+    const email =
+        user.emailAddresses && user.emailAddresses.length > 0
+            ? user.emailAddresses[0].emailAddress
+            : null;
 
-    if (!hasActiveSubscription){
-       return <UpgradeRequired/>;
+    if (!email) {
+        redirect('/sign-in');
+    }
+
+    const hasActiveSubscription = await hasActivePlan(email);
+
+    if (!hasActiveSubscription) {
+        return <UpgradeRequired />;
     }
 
     return <>{children}</>
