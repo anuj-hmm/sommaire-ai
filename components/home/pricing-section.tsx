@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
+import { pricingPlans } from '@/utils/constants';
 //array of objects
 //jisme details of basic and pro plan honge
 type PriceType={
@@ -12,35 +13,7 @@ type PriceType={
     paymentLink:string,
     priceID:string,
 }
-const plans = [
-  {
-    name: 'Basic',
-    price: 9,
-    description: 'Perfect for occasional use',
-    id: 'basic',
-    items: ['5 PDF summaries per month'],
-    paymentLink: process.env.NODE_ENV==='development'
-    ? 'https://buy.stripe.com/test_28E14pefW5ZKfU6dgQfrW00'
-    :'',
-    priceID: '',
-  },
-  {
-    name: 'Pro',
-    price: 19,
-    description: 'For professionals and teams',
-    items: [
-      'Unlimited PDF summaries',
-      'Priority processing',
-      '24/7 priority support',
-      'Markdown Export',
-    ],
-    id: 'pro',
-    paymentLink: process.env.NODE_ENV==='development'
-    ? 'https://buy.stripe.com/test_eVqaEZ8VC87S9vI7WwfrW01'
-    :'',
-    priceID: '',
-  },
-];
+
 
 //component for Pricing card
 const PricingCard = ({ name, price, description, items, id, paymentLink }:PriceType) => {
@@ -88,7 +61,7 @@ export default function PricingSection() {
           <h2 className='uppercase font-bold text-xl mb-8 text-rose-500'>Pricing</h2>
         </div>
         <div className='relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8'>
-          {plans.map(plan => (
+          {pricingPlans.map(plan => (
             <PricingCard key={plan.id} {...plan} />
           ))}
         </div>
